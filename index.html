@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VECTORGUARD &bull; Predict. Prevent. Protect.</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet GIS Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Google Fonts & Custom Minimalist Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandnavy: '#151d30',
+            branddark: '#0f1626',
+            brandcard: '#1c263f',
+            brandborder: '#2c3a59',
+            brandmuted: '#8b9bb4'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#151d30] text-white selection:bg-white selection:text-[#0f1626]">
+
+  <!-- Top Upfront Location Permission & Status Bar -->
+  <div class="bg-[#0f1626] border-b border-[#2c3a59] py-2.5 px-6 text-xs text-[#8b9bb4]">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        <span id="upfront-location-status">Requesting location permission upfront to evaluate local microclimates...</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="btn-request-location" onclick="window.vectorGuardApp.requestLocationUpfront()" class="text-white underline hover:opacity-80 font-medium">
+          Detect GPS Location
+        </button>
+        <span class="text-[#2c3a59]">|</span>
+        <select id="preset-district-select" class="bg-[#1c263f] text-white text-[11px] border border-[#2c3a59] rounded px-2 py-1 focus:outline-none">
+          <option>Loading locations...</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimalist Header / Navigation Bar -->
+  <header class="border-b border-[#2c3a59] bg-[#0f1626]/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="font-display font-extrabold text-xl sm:text-2xl tracking-[0.25em] uppercase text-white hover:opacity-90 transition">
+        VectorGuard
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-[#8b9bb4]">
+        <a href="#what-we-offer" class="hover:text-white transition">What We Offer</a>
+        <a href="#creators-note" class="hover:text-white transition">Note from Creators</a>
+        <a href="#offerings-interactive" class="hover:text-white transition">Interactive System</a>
+        <a href="education.html" class="hover:text-white transition">Education &amp; FAQs</a>
+      </nav>
+      <div>
+        <a href="#offerings-interactive" class="btn-pill !py-2.5 !px-6 !text-xs font-bold">
+          Explore System
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 1. HERO SECTION ================= -->
+  <section class="max-w-6xl mx-auto px-6 pt-24 pb-28 text-center sm:text-left">
+    <div class="max-w-4xl">
+      <!-- Prominent Name -->
+      <span class="text-xs uppercase tracking-[0.3em] text-[#8b9bb4] font-semibold block mb-4">
+        Autonomous Public Health Infrastructure
+      </span>
+      
+      <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] text-white mb-6">
+        VectorGuard
+      </h1>
+
+      <!-- Three Tagline Words Starting with P -->
+      <div class="font-display text-lg sm:text-2xl uppercase tracking-[0.25em] text-[#8b9bb4] font-bold mb-6">
+        Predict &bull; Prevent &bull; Protect
+      </div>
+
+      <!-- User Specified Copy -->
+      <div class="space-y-2 mb-10">
+        <p class="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white leading-tight">
+          Predict mosquito threats.
+        </p>
+        <p class="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#8b9bb4] leading-tight">
+          Protect yourself and your loved ones.
+        </p>
+      </div>
+
+      <!-- Action Button -->
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="#offerings-interactive" class="btn-pill">
+          Access Live Risk Prediction
+        </a>
+        <a href="#what-we-offer" class="btn-pill btn-pill-outline">
+          Learn More &darr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. WHAT WE OFFER (OVERVIEW SECTION) ================= -->
+  <section id="what-we-offer" class="max-w-6xl mx-auto px-6 py-20 border-t border-[#2c3a59]">
+    <div class="mb-14">
+      <span class="text-xs uppercase tracking-[0.25em] text-[#8b9bb4] font-semibold block mb-2">
+        Overview
+      </span>
+      <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        What We Offer
+      </h2>
+      <p class="text-[#8b9bb4] text-base sm:text-lg mt-3 max-w-xl font-light">
+        A unified platform integrating continuous environmental modeling with direct municipal escalation and public education.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Offering 1 -->
+      <div class="bg-[#1c263f] border border-[#2c3a59] rounded-3xl p-8 flex flex-col justify-between hover:border-white/30 transition">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-4">01 &bull; Risk Prediction</span>
+          <h3 class="font-display text-2xl font-bold text-white mb-3">
+            Hyper-Local Risk Prediction
+          </h3>
+          <p class="text-sm text-[#8b9bb4] leading-relaxed font-light">
+            Requests location permission upfront to access real-time atmospheric factors—temperature, relative humidity, and precipitation. Pinpoints nearby water bodies and identifies precise biological treatment needs.
+          </p>
+        </div>
+        <div class="mt-8 pt-6 border-t border-[#2c3a59]">
+          <a href="#offerings-interactive" class="text-sm font-semibold text-white inline-flex items-center gap-2 hover:opacity-80">
+            View Live Risk Engine &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Offering 2 -->
+      <div class="bg-[#1c263f] border border-[#2c3a59] rounded-3xl p-8 flex flex-col justify-between hover:border-white/30 transition">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-4">02 &bull; Civic Escalation</span>
+          <h3 class="font-display text-2xl font-bold text-white mb-3">
+            Report to Municipal Corporation
+          </h3>
+          <p class="text-sm text-[#8b9bb4] leading-relaxed font-light">
+            Directly connect with municipal authorities to raise grievances for mosquito breeding, open sewers, or general civic failures through the official portal.
+          </p>
+        </div>
+        <div class="mt-8 pt-6 border-t border-[#2c3a59]">
+          <a href="#offerings-interactive" class="text-sm font-semibold text-white inline-flex items-center gap-2 hover:opacity-80">
+            File Grievance Direct &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Offering 3 -->
+      <div class="bg-[#1c263f] border border-[#2c3a59] rounded-3xl p-8 flex flex-col justify-between hover:border-white/30 transition">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-4">03 &bull; Science &amp; Prevention</span>
+          <h3 class="font-display text-2xl font-bold text-white mb-3">
+            Education on Preventive Measures
+          </h3>
+          <p class="text-sm text-[#8b9bb4] leading-relaxed font-light">
+            Dedicated knowledge base featuring mortality statistics, vector lifecycle science, biological larvicides (Bti), and comprehensive FAQs.
+          </p>
+        </div>
+        <div class="mt-8 pt-6 border-t border-[#2c3a59]">
+          <a href="education.html" class="text-sm font-semibold text-white inline-flex items-center gap-2 hover:opacity-80">
+            Visit Educational Page &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 3. NOTE FROM THE CREATORS ================= -->
+  <section id="creators-note" class="max-w-4xl mx-auto px-6 py-24 border-t border-[#2c3a59]">
+    <span class="text-xs uppercase tracking-[0.25em] text-[#8b9bb4] font-semibold block mb-4">
+      Manifesto
+    </span>
+    
+    <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-12">
+      Note from the Creators
+    </h2>
+
+    <!-- User's Exact Copy with Large, Clean Editorial Pacing -->
+    <div class="space-y-8 text-base sm:text-lg leading-relaxed text-[#8b9bb4] font-light">
+      <p class="text-white text-xl sm:text-2xl font-normal leading-relaxed">
+        The modern world presents hidden hazards. Unmanaged standing water, shifting global temperatures, and dense urban development leave millions exposed to preventable threats like Dengue and Malaria every year. Accelerating climate change and rising ambient heat compress vector incubation cycles, while rapid urban crowding creates concentrated breeding micro-climates right outside our doors.
+      </p>
+
+      <p>
+        We all want safe, disease-free neighborhoods, but how? Public health has remained reactive and unpredictable for far too long.
+      </p>
+
+      <p class="text-white font-medium">
+        We are building a new standard that protects your living environment continuously.
+      </p>
+
+      <p>
+        We started by mapping micro-environmental biology. Combining local climate telemetry, urban heat profiling, satellite moisture analysis, and vector lifecycle metrics, we created a system that identifies mosquito surges—targeting the exact root causes long before outbreaks occur.
+      </p>
+
+      <p>
+        Our platform is built on real-time measurement, biological evidence, and localized precision.
+      </p>
+
+      <div class="py-4 border-y border-[#2c3a59] my-6">
+        <p class="font-display text-2xl sm:text-3xl text-white font-bold tracking-tight">
+          What we are building is long overdue. We call it Autonomous Public Health.
+        </p>
+      </div>
+
+      <p>
+        While the world focuses on autonomous vehicles and self-writing software, baseline human security and civic health remain fundamental priorities that demand immediate technological intervention. Clean, threat-free living spaces are not a secondary luxury—they are the utmost primary foundation.
+      </p>
+
+      <p>
+        By 2047, a fully developed India must mean complete ecosystem excellence. Vector-borne diseases are predictable data problems, and we are building the technological infrastructure to eliminate them permanently.
+      </p>
+
+      <p>
+        Our commitment is care. We promise to safeguard your surroundings with the same urgency as our own families—empowering households with immediate preventive protocols while establishing direct, rapid escalation channels to municipal ward authorities.
+      </p>
+
+      <p>
+        Everything is in one place: hyper-local risk tracking, root-cause diagnostics, breeding forecasts, and preventative protocols.
+      </p>
+
+      <p>
+        Home base is the VectorGuard Platform. That is where we analyze your environmental biomarkers and keep your community safe.
+      </p>
+
+      <p class="text-white font-semibold text-xl pt-4">
+        We are VectorGuard. We hope you will join us.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= 4. INTERACTIVE OFFERING DETAILS ================= -->
+  <section id="offerings-interactive" class="max-w-6xl mx-auto px-6 py-20 border-t border-[#2c3a59]">
+    <div class="mb-14">
+      <span class="text-xs uppercase tracking-[0.25em] text-[#8b9bb4] font-semibold block mb-2">
+        Action Console
+      </span>
+      <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        Explore Our Offerings
+      </h2>
+      <p class="text-[#8b9bb4] text-base sm:text-lg mt-3 max-w-xl font-light">
+        Interact with each offering below to run risk calculations, file municipal grievances, or view educational research.
+      </p>
+    </div>
+
+    <!-- 3 Clickable Triggers -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      
+      <!-- Trigger 1: Risk Prediction -->
+      <button id="tab-risk" class="bg-[#1c263f] border border-[#2c3a59] rounded-2xl p-6 text-left hover:border-white transition flex flex-col justify-between group">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-2">Offering 01</span>
+          <h3 class="font-display text-xl font-bold text-white mb-2">Risk Prediction</h3>
+          <p class="text-xs text-[#8b9bb4] leading-relaxed">
+            Click to expand live atmospheric analysis, water bodies detection &amp; targeted treatment recommendations.
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-white mt-6 group-hover:translate-x-1 transition-transform inline-block">
+          Expand Live Assessment &darr;
+        </span>
+      </button>
+
+      <!-- Trigger 2: Raise an Issue -->
+      <button id="tab-issue" class="bg-[#1c263f] border border-[#2c3a59] rounded-2xl p-6 text-left hover:border-white transition flex flex-col justify-between group">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-2">Offering 02</span>
+          <h3 class="font-display text-xl font-bold text-white mb-2">Raise an Issue</h3>
+          <p class="text-xs text-[#8b9bb4] leading-relaxed">
+            Click to open the direct link and formatted complaint generator for your municipal corporation.
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-white mt-6 group-hover:translate-x-1 transition-transform inline-block">
+          Open Grievance Desk &darr;
+        </span>
+      </button>
+
+      <!-- Trigger 3: Education (Navigates to dedicated new page) -->
+      <a href="education.html" class="bg-[#1c263f] border border-[#2c3a59] rounded-2xl p-6 text-left hover:border-white transition flex flex-col justify-between group">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-2">Offering 03</span>
+          <h3 class="font-display text-xl font-bold text-white mb-2">Education &amp; FAQs</h3>
+          <p class="text-xs text-[#8b9bb4] leading-relaxed">
+            Navigate to our dedicated educational page containing mortality statistics, preventive protocols &amp; FAQs.
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-white mt-6 group-hover:translate-x-1 transition-transform inline-block">
+          Navigate to Page &rarr;
+        </span>
+      </a>
+
+    </div>
+
+    <!-- EXPANDABLE PANEL 1: RISK PREDICTION DETAILS -->
+    <div id="panel-risk-details" class="bg-[#1c263f] border border-[#2c3a59] rounded-3xl p-8 sm:p-10 mb-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#2c3a59] pb-6 mb-8">
+        <div>
+          <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-1">
+            Real-Time Analysis Engine
+          </span>
+          <h3 class="font-display text-2xl sm:text-3xl font-bold text-white">
+            Hyper-Local Vector Risk Assessment
+          </h3>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="window.vectorGuardApp.requestLocationUpfront()" class="btn-pill !py-2 !px-4 !text-xs">
+            Refresh GPS
+          </button>
+        </div>
+      </div>
+
+      <!-- Key Metrics Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 pb-8 border-b border-[#2c3a59] mb-8">
+        <div>
+          <span class="block text-xs text-[#8b9bb4] uppercase tracking-wider mb-1">Risk Score</span>
+          <span id="risk-score-val" class="font-display text-3xl font-extrabold text-white">--/100</span>
+        </div>
+        <div>
+          <span class="block text-xs text-[#8b9bb4] uppercase tracking-wider mb-1">Vulnerability</span>
+          <span id="risk-level-val" class="font-display text-xl font-bold text-white">Analyzing</span>
+        </div>
+        <div>
+          <span class="block text-xs text-[#8b9bb4] uppercase tracking-wider mb-1">Ambient Temp</span>
+          <span id="weather-temp-val" class="font-display text-2xl font-bold text-white">--°C</span>
+        </div>
+        <div>
+          <span class="block text-xs text-[#8b9bb4] uppercase tracking-wider mb-1">Humidity</span>
+          <span id="weather-hum-val" class="font-display text-2xl font-bold text-white">--%</span>
+        </div>
+        <div>
+          <span class="block text-xs text-[#8b9bb4] uppercase tracking-wider mb-1">Precipitation</span>
+          <span id="weather-rain-val" class="font-display text-2xl font-bold text-white">-- mm</span>
+        </div>
+      </div>
+
+      <!-- Targeted Treatment Section -->
+      <div class="mb-8">
+        <h4 class="font-display text-lg font-bold text-white mb-2">
+          Targeted Treatment &amp; Nearby Water Bodies
+        </h4>
+        <div id="targeted-treatment-val" class="bg-[#0f1626] border border-[#2c3a59] rounded-2xl p-6">
+          <p class="text-sm text-[#8b9bb4]">Evaluating surrounding hydrological bodies...</p>
+        </div>
+      </div>
+
+      <!-- Water Bodies List -->
+      <div class="mb-8">
+        <h5 class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold mb-3">
+          Surrounding Water Bodies in Your Vicinity
+        </h5>
+        <div id="interactive-waterbodies-list" class="space-y-2">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Interactive Map -->
+      <div>
+        <h5 class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold mb-3">
+          GIS Hydrology &amp; Flight Radius Map
+        </h5>
+        <div id="vector-map" class="shadow-lg"></div>
+      </div>
+    </div>
+
+    <!-- EXPANDABLE PANEL 2: RAISE AN ISSUE TO MUNICIPAL CORPORATION -->
+    <div id="panel-issue-details" class="bg-[#1c263f] border border-[#2c3a59] rounded-3xl p-8 sm:p-10 mb-8">
+      <div class="border-b border-[#2c3a59] pb-6 mb-8">
+        <span class="text-xs uppercase tracking-[0.2em] text-[#8b9bb4] font-bold block mb-1">
+          Municipal Redressal Desk
+        </span>
+        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white">
+          Raise an Issue to Your Municipal Corporation
+        </h3>
+        <p class="text-sm text-[#8b9bb4] mt-2 max-w-2xl font-light">
+          Report vector breeding, standing water, overflowing drains, or civic sanitation issues directly to authorities.
+        </p>
+      </div>
+
+      <!-- Direct Official Link Callout -->
+      <div class="bg-[#0f1626] border border-[#2c3a59] rounded-2xl p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div>
+          <span class="text-xs uppercase tracking-wider text-[#8b9bb4] block mb-1 font-bold">Official Registration Portal</span>
+          <div class="text-xl font-bold text-white mb-1">Municipal Services Grievance Registration</div>
+          <p class="text-xs text-[#8b9bb4] font-mono break-all mb-3">https://municipalservices.in/complaint_form.php?id=259</p>
+          <p class="text-xs text-[#8b9bb4] font-light max-w-lg">
+            Use this official portal to submit complaints directly to municipal ward teams regarding mosquito infestation, stagnant water pools, blocked stormwater nullahs, and sanitation failures.
+          </p>
+        </div>
+        <div class="flex-shrink-0">
+          <a href="https://municipalservices.in/complaint_form.php?id=259" target="_blank" rel="noopener" class="btn-pill !py-3.5 !px-8 text-sm">
+            Open Complaint Form &nearr;
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Minimalist Clean Footer -->
+  <footer class="border-t border-[#2c3a59] py-16 bg-[#0f1626]">
+    <div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-8 text-xs text-[#8b9bb4]">
+      <div>
+        <span class="font-display font-extrabold uppercase tracking-[0.25em] text-white block mb-2 text-sm">
+          VectorGuard
+        </span>
+        <p class="font-light">Autonomous Public Health Infrastructure &bull; Smart India Hackathon 2026 (SIH26200)</p>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="education.html" class="text-white hover:underline">Education &amp; FAQs</a>
+        <a href="https://municipalservices.in/complaint_form.php?id=259" target="_blank" class="text-white hover:underline">Municipal Grievance</a>
+      </div>
+
+      <div>
+        <span>&copy; 2026 VectorGuard. Predict &bull; Prevent &bull; Protect.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="data/telangana-data.js"></script>
+  <script src="js/risk-engine.js"></script>
+  <script src="js/map-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
