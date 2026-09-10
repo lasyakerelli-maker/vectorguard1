@@ -205,27 +205,21 @@ class VectorRiskEngine {
     }
 
     // Ensure score clamped 0-100
-    score = Math.min(100, Math.max(5, score));
+    score = Math.min(100, Math.max(10, score));
 
-    // Determine Risk Level & Alert Tone
+    // Determine Risk Level & Alert Tone (Clear HIGH RISK vs LOW RISK)
     let level, color, label, headline, summary;
-    if (score >= 68) {
+    if (score >= 50) {
       level = 'HIGH';
-      color = '#d4351c'; // GOV.UK red
-      label = 'CRITICAL BREEDING RISK';
-      headline = 'Hyper-Local Vector Proliferation Imminent';
+      color = '#ffffff';
+      label = 'HIGH RISK';
+      headline = 'High Vector Breeding Viability Detected';
       summary = 'Current atmospheric temperature, humidity, and surrounding water bodies provide optimal biological incubation conditions. Immediate anti-larval treatment and household source reduction are strongly advised.';
-    } else if (score >= 42) {
-      level = 'MODERATE';
-      color = '#f47738'; // GOV.UK amber/orange
-      label = 'MODERATE BREEDING RISK';
-      headline = 'Elevated Surveillance Recommended';
-      summary = 'Atmospheric conditions moderately favor vector survival. Regular inspection of water holding containers and clearance of perimeter drainage channels is required.';
     } else {
       level = 'LOW';
-      color = '#00703c'; // GOV.UK green
-      label = 'LOW BREEDING RISK';
-      headline = 'Subdued Vector Activity';
+      color = '#8b9bb4';
+      label = 'LOW RISK';
+      headline = 'Low Vector Breeding Viability Detected';
       summary = 'Climatic conditions are currently hostile to rapid larval maturation. Continue routine sanitary vigilance and weekly dry-day inspections.';
     }
 

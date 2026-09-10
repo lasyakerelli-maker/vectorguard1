@@ -107,7 +107,21 @@ class VectorGuardApp {
     const waterbodyListEl = document.getElementById('interactive-waterbodies-list');
 
     if (riskScoreEl) riskScoreEl.innerText = `${risk.score}/100`;
-    if (riskLevelEl) riskLevelEl.innerText = `${risk.level} RISK`;
+    if (riskLevelEl) {
+      riskLevelEl.innerHTML = `<span class="inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest ${risk.level === 'HIGH' ? 'bg-white text-[#0f1626]' : 'bg-[#2c3a59] text-white'}">${risk.level} RISK</span>`;
+    }
+
+    // Also update top bar and overview card badge
+    const topRiskBadge = document.getElementById('top-risk-badge');
+    if (topRiskBadge) {
+      topRiskBadge.innerHTML = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${risk.level === 'HIGH' ? 'bg-white text-[#0f1626]' : 'bg-[#2c3a59] text-white'}"><span class="w-1.5 h-1.5 rounded-full ${risk.level === 'HIGH' ? 'bg-red-500 animate-pulse' : 'bg-emerald-400'}"></span>${risk.level} RISK</span>`;
+    }
+
+    const cardRiskBadge = document.getElementById('card-risk-badge');
+    if (cardRiskBadge) {
+      cardRiskBadge.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${risk.level === 'HIGH' ? 'bg-white text-[#0f1626]' : 'bg-[#2c3a59] text-white'}"><span class="w-2 h-2 rounded-full ${risk.level === 'HIGH' ? 'bg-red-500 animate-pulse' : 'bg-emerald-400'}"></span>Current Status: ${risk.level} RISK</span>`;
+    }
+
     if (tempEl) tempEl.innerText = `${weather.temperature}°C`;
     if (humEl) humEl.innerText = `${weather.humidity}%`;
     if (rainEl) rainEl.innerText = `${weather.precipitation} mm`;
